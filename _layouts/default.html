@@ -7,6 +7,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+          <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <!-- Theme color for mobile browsers -->
+  <meta name="theme-color" content="#000000">
+  <!-- iOS specific meta tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Your Site Name">
+  <link rel="apple-touch-icon" href="/assets/images/icon-192x192.png">
 
   <style>  
   .logo-title-container {
@@ -105,5 +114,56 @@
       <p>© {{ site.time | date: '%Y' }} Campus Coordination Committee (CCC), Indian Institute of Technology. All rights reserved.</p>
     </div>
   </footer>
+  <!-- Service Worker Registration Script -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js')
+        .then(function(registration) {
+          console.log('ServiceWorker registration successful: ', registration.scope);
+        }, function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+  }
+  // Add this script to your main JavaScript file or in a <script> tag
+
+let deferredPrompt;
+const installButton = document.getElementById('install-button');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  // Prevent the mini-infobar from appearing on mobile
+  e.preventDefault();
+  // Stash the event so it can be triggered later
+  deferredPrompt = e;
+  // Update UI to notify the user they can install the PWA
+  if (installButton) {
+    installButton.style.display = 'block';
+  }
+});
+
+if (installButton) {
+  installButton.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      // Show the install prompt
+      deferredPrompt.prompt();
+      // Wait for the user to respond to the prompt
+      const { outcome } = await deferredPrompt.userChoice;
+      console.log(`User response to the install prompt: ${outcome}`);
+      // Clear the deferredPrompt for next time
+      deferredPrompt = null;
+      installButton.style.display = 'none';
+    }
+  });
+}
+
+// Hide the install button if the app is already installed
+window.addEventListener('appinstalled', () => {
+  if (installButton) {
+    installButton.style.display = 'none';
+  }
+  deferredPrompt = null;
+});
+</script>
 </body>
 </html>

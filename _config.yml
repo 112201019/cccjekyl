@@ -17,6 +17,21 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
+
+
+# Add these lines to your _config.yml
+
+# Include PWA files in the build
+include:
+  - manifest.json
+  - sw.js
+
+# Plugins (if you want to add PWA-specific plugins)
+plugins:
+  - jekyll-sitemap
+  - jekyll-feed
+
+  
 title: Clean Campus Committee - IIT Palakkad
 description: Official website of the Clean Campus Committee at IIT Palakkad, detailing our activities, zones, and efforts to maintain a pristine campus environment.
 email: kdinesh@iitpkd.ac.in
