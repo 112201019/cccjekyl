@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | CCC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+
+  <style>  
+  .logo-title-container {
+    height: 100px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .CCCImage {
+    height: 100px;
+    width: 100px;
+    width: auto;
+  }
+
+  .logotext{
+    color: rgb(8, 50, 0);
+  }
+  .main-container {
+    max-width: 1000px;
+    margin: 0 auto;   
+  }
+
+  .footer-container{
+    margin: 0;
+    padding: 0;
+    font-size: 15px;
+    max-width: 2000px;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+  }
+
+  .navbar{
+    color: black;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    gap: 7rem;
+    justify-content: center;
+  }
+  .navbar a {
+    color: #064e3b; 
+    }
+
+  .navbar a:hover {
+    color: #10b981; 
+  }
+
+  @media (max-width: 700px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+} 
+</style>
+
+</head>
+
+<body>
+  <header>
+    <div>
+      <div class="logo-title-container">
+        <a href="{{ '/' | relative_url }}" class="logo-title">
+          <img src="{{ '/assets/images/ccc-logo.png' | relative_url }}" alt="Clean Campus Committee Logo" class="CCCImage">
+        </a>
+        <div>
+          <h1 class="logotext">Clean Campus Committee</h1>
+          <p  class="logotext">Indian Institute of Technology Palakkad</p>
+        </div>
+      </div>
+
+      <nav class="navbar">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/activities/' | relative_url }}">Activities</a>
+        <a href="{{ '/dashboard/' | relative_url }}">Dashboard</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-container">
+    {{ content }}
+  </main>
+
+  <hr>
+  <footer class="footer-container">
+    <div>
+      <h4>Contact Us </h4>
+      <p>Email: <a href="mailto:">sec_hostel@smail.iitpkd.ac.in</a></p>
+      <p>Office: Student Activity Center (SAC), Room 203</p>
+      <p>© {{ site.time | date: '%Y' }} Campus Coordination Committee (CCC), Indian Institute of Technology. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

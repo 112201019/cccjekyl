@@ -1,22 +1,94 @@
 ---
-layout: post
-title: "Understanding Climate Change: A Brief Overview"
-date: 2025-05-25 11:30:00 +0530
-categories: [climate-change, environment, science]
-tags: [global-warming, sustainability, greenhouse-gases]
-image: /assets/images/climate-change.jpg # Optional: add an image for the post
+layout: default
+title: Welcome to the Clean Campus Committee
+permalink: /
 ---
 
-Climate change refers to long-term shifts in temperatures and weather patterns. These shifts may be natural, but since the 1800s, human activities have been the main driver of climate change, primarily due to the burning of fossil fuels (like coal, oil, and gas), which produces heat-trapping gases.
 
-#### Key Impacts:
-* **Rising global temperatures:** Leading to hotter summers and more frequent heatwaves.
-* **Changing precipitation patterns:** Causing more intense droughts in some regions and heavier rainfall/flooding in others.
-* **Melting glaciers and ice caps:** Contributing to sea-level rise.
-* **Ocean acidification:** Affecting marine life and ecosystems.
+## Welcome to the Clean Campus Committee (CCC)
 
-It's crucial for us to understand these changes and work towards sustainable solutions to mitigate their effects. Every small action contributes to a greener future.
+The Clean Campus Committee (CCC) is dedicated to fostering a clean, sustainable, and vibrant environment at the Indian Institute of Technology. We believe that a pristine campus enhances the quality of life, promotes well-being, and inspires excellence.
 
-**Further Reading:**
-* [Intergovernmental Panel on Climate Change (IPCC)](https://www.ipcc.ch/)
-* [NASA's Climate Change Website](https://climate.nasa.gov/)
+
+
+### Our Vision
+To cultivate a campus culture where cleanliness and environmental responsibility are integral to our daily lives, ensuring a healthy and inspiring atmosphere for all students, faculty, and staff.
+
+
+
+### Key Focus Areas & Activities
+
+Our efforts are organized across several key zones within the campus, each with specific activities aimed at maintaining and improving our surroundings.
+
+
+
+Join us in making our campus a model of cleanliness and sustainability!
+
+<div class="slideshow-container">
+  {% for image in site.data.images %}
+    <div class="mySlides fade">
+      <img src="{{ image.src }}" alt="{{ image.alt }}" style="width:100%">
+    </div>
+  {% endfor %}
+
+  <a class="prev" onclick="plusSlides(-1)">❮</a>
+  <a class="next" onclick="plusSlides(1)">❯</a>
+</div>
+
+<br>
+
+
+<style>
+.slideshow-container {
+  max-width: 900px;
+  position: relative;
+  margin: auto;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 12px;
+  margin-top: -22px;
+  color: white;
+  font-weight: bold;
+  font-size: 24px;
+  background-color: rgba(0,0,0,0.5);
+  border-radius: 3px;
+  user-select: none;
+  transition: 0.3s;
+}
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+.next {
+  right: 0;
+}
+</style>
+
+<script>
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides(slideIndex += n);
+}
+function currentSlide(n) {
+  showSlides(slideIndex = n);
+}
+function showSlides(n) {
+  const slides = document.getElementsByClassName("mySlides");
+  const dots = document.getElementsByClassName("dot");
+  if (n > slides.length) { slideIndex = 1 }
+  if (n < 1) { slideIndex = slides.length }
+  for (let i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (let i = 0; i < dots.length; i++) {
+    dots[i].classList.remove("active");
+  }
+  slides[slideIndex - 1].style.display = "block";
+}
+</script>
