@@ -2,13 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Web NFC Playground</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    button {
+      margin: 10px 10px 10px 0;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #output {
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Web NFC Demo</h1>
-  <button id="read">Start Reading NFC</button>
-  <button id="write">Write to NFC</button>
-  <pre id="output"></pre>
+
+  <h1>🔶 Web NFC Playground</h1>
+  <button id="read">Start NFC Reading</button>
+  <button id="write">Write NFC Message</button>
+
+  <div>
+    <label for="writeInput">Message to Write:</label><br>
+    <input type="text" id="writeInput" value="Hello from Web NFC!" size="40">
+  </div>
+
+  <pre id="output">Output will appear here...</pre>
 
   <script src="script.js"></script>
 </body>

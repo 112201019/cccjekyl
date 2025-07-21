@@ -1,33 +1,59 @@
 const output = document.getElementById('output');
+const writeInput = document.getElementById('writeInput');
+
+// Utility to append logs
+function log(msg) {
+  output.textContent += `${msg}\n`;
+}
 
 document.getElementById('read').addEventListener('click', async () => {
+  if (!('NDEFReader' in window)) {
+    log('❌ Web NFC is not supported in this browser.');
+    return;
+  }
+
   try {
     const ndef = new NDEFReader();
     await ndef.scan();
-    output.textContent += 'NFC Scan started\n';
+    log('✅ NFC scan started. Tap a tag to read...');
 
     ndef.onreading = event => {
       const { serialNumber, message } = event;
-      output.textContent += `> Serial: ${serialNumber}\n`;
+      log(`\n📶 Tag read (Serial: ${serialNumber})`);
 
       for (const record of message.records) {
-        output.textContent += `> Record type: ${record.recordType}\n`;
-        output.textContent += `> Media type: ${record.mediaType}\n`;
-        output.textContent += `> Data: ${new TextDecoder().decode(record.data)}\n`;
+        log(`📄 Record type: ${record.recordType}`);
+        log(`🔤 Media type: ${record.mediaType || 'N/A'}`);
+
+        const textDecoder = new TextDecoder(record.encoding || 'utf-8');
+        const decoded = textDecoder.decode(record.data);
+        log(`📦 Data: ${decoded}`);
       }
     };
-  } catch (error) {
-    output.textContent += `Error: ${error}\n`;
+
+    ndef.onreadingerror = () => {
+      log('⚠️ Error reading NFC tag.');
+    };
+  } catch (err) {
+    log(`❌ Read failed: ${err}`);
   }
 });
 
 document.getElementById('write').addEventListener('click', async () => {
+  const messageToWrite = writeInput.value;
+
+  if (!('NDEFReader' in window)) {
+    log('❌ Web NFC is not supported in this browser.');
+    return;
+  }
+
   try {
     const ndef = new NDEFReader();
-    await ndef.write("Hello from Web NFC!");
-    output.textContent += "Message written to NFC tag.\n";
-  } catch (error) {
-    output.textContent += `Write failed: ${error}\n`;
+    await ndef.write({
+      records: [{ recordType: "text", data: messageToWrite }]
+    });
+    log(`✅ Message written to NFC tag: "${messageToWrite}"`);
+  } catch (err) {
+    log(`❌ Write failed: ${err}`);
   }
 });
-
