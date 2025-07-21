@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/main.css' | relative_url }}">
+  <style>
+    body {
+      background-color: #f9f9f9;
+      font-family: Georgia, serif;
+    }
+    .about-header {
+      text-align: center;
+      background-color: #003366;
+      color: white;
+      padding: 2rem;
+    }
+    .about-content {
+      padding: 2rem;
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="about-header">
+    <h1>About the CCC</h1>
+    <p>Learn more about our committee</p>
+  </div>
+
+  <div class="about-content">
+    {{ content }}
+  </div>
+</body>
+</html>

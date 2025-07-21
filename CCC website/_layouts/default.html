@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <script>
+    // 1) Listen for the CSS media query flipping to standalone
+    const standaloneMQL = window.matchMedia('(display-mode: standalone)');
+    standaloneMQL.addEventListener('change', e => {
+      if (e.matches) {
+        // now in standalone
+        console.log('Entered standalone mode via media query');
+        window.location.reload();
+      }
+    });
+  
+    // 2) Listen for the PWA install event
+    window.addEventListener('appinstalled', () => {
+      console.log('PWA was just installed');
+      window.location.reload();
+    });
+  </script>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | CCC</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+  <link rel="manifest" href="{{ '/assets/manifest.json' | relative_url }}">
+  <meta name="theme-color" content="#317EFB">
+  <script>
+  // If PWA standalone mode & not yet logged in, redirect to login.html
+  if (window.matchMedia('(display-mode: standalone)').matches
+      && !localStorage.getItem('ccc_logged_in')) {
+    window.location.replace('/login.html');
+  }
+  </script>
+<style>  
+  .logo-title-container {
+    height: 100px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding: 0 1rem;
+  }
+
+  .CCCImage {
+    height: 80px;
+    width: 80px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .logotext{
+    color: rgb(8, 50, 0);
+  }
+
+  .logotext h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+
+  .logotext p {
+    margin: 0;
+    font-size: 0.9rem;
+  }
+
+  .main-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+
+  .footer-container{
+    margin: 0;
+    padding: 1rem;
+    font-size: 15px;
+    max-width: 2000px;
+    display: flex;
+    justify-content: center;
+    margin: 10px auto;
+  }
+
+  .navbar{
+    color: black;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 1rem;
+    flex-wrap: wrap;
+    gap: 3rem;
+    justify-content: center;
+    display: flex;
+  }
+  
+  .navbar a {
+    color: #064e3b;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    white-space: nowrap;
+  }
+
+  .navbar a:hover {
+    color: #10b981; 
+  }
+
+  #greeting {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+
+  #userphoto {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left: 0.5rem;
+  }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .logo-title-container {
+      flex-direction: column;
+      text-align: center;
+      gap: 1rem;
+      height: auto;
+      padding: 1rem;
+    }
+
+    .CCCImage {
+      height: 60px;
+      width: 60px;
+    }
+
+    .logotext h1 {
+      font-size: 1.5rem;
+    }
+
+    .logotext p {
+      font-size: 0.8rem;
+    }
+
+    .navbar {
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem;
+    }
+
+    .navbar a {
+      padding: 0.75rem 1.5rem;
+      width: 100%;
+      text-align: center;
+      border-radius: 0.25rem;
+      transition: background-color 0.2s;
+    }
+
+    .footer-container {
+      padding: 1rem 0.5rem;
+      text-align: center;
+    }
+
+    .footer-container p {
+      font-size: 0.8rem;
+    }
+
+    #greeting {
+      position: relative;
+      top: auto;
+      right: auto;
+      margin: 1rem;
+      text-align: center;
+    }
+  }
+</style>
+
+</head>
+
+<body>
+  <header>
+    <div>
+      <div class="logo-title-container">
+        <a href="{{ '/' | relative_url }}" class="logo-title">
+          <img src="{{ '/assets/images/ccc-logo.png' | relative_url }}" alt="Clean Campus Committee Logo" class="CCCImage">
+        </a>
+        <div>
+          <h1 class="logotext">Clean Campus Committee</h1>
+          <p  class="logotext">Indian Institute of Technology Palakkad</p>
+        </div>
+      </div>
+
+      <nav class="navbar">
+        <a href="{{ '/' | relative_url }}">Home</a>
+        <a href="{{ '/activities/' | relative_url }}">Activities</a>
+        <a href="{{ '/dashboard/' | relative_url }}">Dashboard</a>
+        <a href="{{ '/about/' | relative_url }}">About</a>
+      </nav>
+    </div>
+  </header>
+  <p id="greeting">
+    Hi, <span id="username">Username</span>
+    <img id="userphoto" src="" alt="Profile">
+  </p>
+  <main class="main-container">
+    {{ content }}
+  </main>
+
+  <hr>
+  <footer class="footer-container">
+    <div>
+      <h4>Contact Us </h4>
+      <p>Email: <a href="mailto:">sec_hostel@smail.iitpkd.ac.in</a></p>
+      <p>Office: Student Activity Center (SAC), Room 203</p>
+      <p>© {{ site.time | date: '%Y' }} Campus Coordination Committee (CCC), Indian Institute of Technology. All rights reserved.</p>
+    </div>
+  </footer>
+  <script>
+    const isStandalone =
+      window.matchMedia('(display-mode: standalone)').matches ||
+      window.navigator.standalone === true;
+
+    if (isStandalone && localStorage.getItem('ccc_logged_in') === '1') {
+      const name = localStorage.getItem('username') || 'User';
+      const photo = localStorage.getItem('userphoto') || '';
+      document.getElementById('username').textContent = name.split(' ')[0];
+      
+      if (photo) {
+        const photoImg = document.getElementById('userphoto');
+        photoImg.src = photo;
+        photoImg.style.display = 'inline';
+      }
+      console.log(name)
+      document.getElementById('greeting').style.display = 'block';
+    }
+  </script>
+
+
+
+</body>
+</html>

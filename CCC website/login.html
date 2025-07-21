@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | CCC PWA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Pico for styling, same as default -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@latest/css/pico.min.css">
+  <!-- Google Sign‑In client library -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <style>
+  .login-container {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;      /* stack children vertically */
+    align-items: center;         /* center horizontally */
+    justify-content: center;     /* center vertically */
+    gap: 1rem;                   /* space between message and button */
+    text-align: center;          /* center text in children */
+    padding: 0 1rem;             /* small side padding for mobile */
+  }
+</style>
+
+</head>
+<body>
+  <main class="login-container">
+  <div>
+    <strong>Please log in with your gmail ending with<code>iitpkd.ac.in</code></strong><br>
+    for offline access.
+  </div>
+
+  <!-- Google Sign-In markup -->
+  <div id="g_id_onload"
+       data-client_id="609906726425-0ksuluhvarh5u2lu00s68dqk4cit4e8t.apps.googleusercontent.com"
+       data-callback="onSignIn"
+       data-auto_prompt="false"
+       data-itp_support="true">
+  </div>
+  <div class="g_id_signin"
+       data-type="standard"
+       data-shape="rectangular"
+       data-theme="outline"
+       data-text="signin_with"
+       data-size="large"
+       data-logo_alignment="left">
+  </div>
+</main>
+
+
+  <script>
+    if (localStorage.getItem('ccc_logged_in') === '1') {
+      window.location.replace('/');
+    }
+    function onSignIn(response) {
+      const payload = JSON.parse(atob(response.credential.split('.')[1]));
+      const email = payload.email || '';
+      const name  = payload.name  || '';
+      const photo = payload.picture || ''; 
+
+      if (email.endsWith('iitpkd.ac.in')) {
+        localStorage.setItem('ccc_logged_in', '1');
+        localStorage.setItem('username', name);
+        localStorage.setItem('userphoto', photo);
+
+        navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => {
+          console.log('SW registered after login', reg);
+          window.location.replace('/');
+        })
+        .catch(err => {
+          console.error('SW registration failed', err);
+          alert('Couldn’t register service worker — you won’t be offline-capable.');
+          window.location.replace('/');
+        });
+      } else {
+        alert('You must use your @iitpkd.ac.in account to access this app.');
+      }
+    }
+  </script>
+</body>
+</html>
